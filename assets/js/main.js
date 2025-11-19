@@ -1,9 +1,7 @@
 /**
-* Template Name: Lonely - v4.3.0
-* Template URL: https://bootstrapmade.com/free-html-bootstrap-template-lonely/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+ * Template Name: Lonely - v4.3.0
+ * Updated for Lian Sixin Portfolio - Dark Mode
+ */
 (function() {
   "use strict";
 
@@ -34,7 +32,7 @@
   }
 
   /**
-   * Easy on scroll event listener 
+   * Easy on scroll event listener
    */
   const onscroll = (el, listener) => {
     el.addEventListener('scroll', listener)
@@ -79,26 +77,6 @@
   }
 
   /**
-   * Header fixed top on scroll
-   */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    let headerOffset = selectHeader.offsetTop
-    let nextElement = selectHeader.nextElementSibling
-    const headerFixed = () => {
-      if ((headerOffset - window.scrollY) <= 0) {
-        selectHeader.classList.add('fixed-top')
-        nextElement.classList.add('scrolled-offset')
-      } else {
-        selectHeader.classList.remove('fixed-top')
-        nextElement.classList.remove('scrolled-offset')
-      }
-    }
-    window.addEventListener('load', headerFixed)
-    onscroll(document, headerFixed)
-  }
-
-  /**
    * Back to top button
    */
   let backtotop = select('.back-to-top')
@@ -124,17 +102,7 @@
   })
 
   /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
-
-  /**
-   * Scrool with ofset on links with a class name .scrollto
+   * Scroll with ofset on links with a class name .scrollto
    */
   on('click', '.scrollto', function(e) {
     if (select(this.hash)) {
@@ -150,17 +118,6 @@
       scrollto(this.hash)
     }
   }, true)
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
 
   /**
    * Porfolio isotope and filter
@@ -187,31 +144,13 @@
         });
       }, true);
     }
-
   });
 
   /**
-   * Initiate portfolio lightbox 
+   * Initiate portfolio lightbox
    */
   const portfolioLightbox = GLightbox({
     selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
   });
 
   /**
@@ -232,31 +171,25 @@
   }
 
   /**
-   * Testimonials slider
+   * Simple Typing Effect for Hero
    */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 40
-      },
+  const typingText = select('.typing-effect');
+  if(typingText) {
+    const words = ["不知名签约作家.", "IT 科技爱好者.", "白日梦想家.", "C/C++ 工程师", "嵌入式工程师", "文学爱好者" , "浪漫主义诗人"];
+    let i = 0;
+    let timer;
 
-      1200: {
-        slidesPerView: 3,
-      }
+    function typeWriter() {
+      let currentWord = words[i % words.length];
+      let text = currentWord;
+      typingText.innerHTML = text;
+
+      // Simple implementation: Just switching words with fade would be easier via CSS,
+      // but here we swap text content periodically.
+      i++;
+      setTimeout(typeWriter, 2500);
     }
-  });
+    typeWriter();
+  }
 
 })()
