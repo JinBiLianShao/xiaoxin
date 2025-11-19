@@ -688,3 +688,308 @@ section {
   text-align: center;
   font-size: 13px;
 }
+
+/* ========================================================
+   移动端专属优化 (Mobile Responsive Tweaks)
+   Add this to the very end of style.css
+   ======================================================== */
+
+@media (max-width: 768px) {
+
+  /* --- 1. 首页 Hero 区域优化 --- */
+  #hero {
+    /* 修复手机浏览器地址栏遮挡问题，使用动态高度 */
+    height: 100vh;
+    min-height: 500px;
+    background-attachment: scroll; /* 避免手机端背景滚动卡顿 */
+  }
+
+  #hero h1 {
+    font-size: 36px; /* 缩小标题字体 */
+    line-height: 1.3;
+    padding: 0 10px;
+  }
+
+  #hero h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  /* 调整打字机光标的高度，防止换行时布局跳动 */
+  .typing-effect {
+    display: inline-block;
+    min-height: 24px;
+  }
+
+  /* --- 2. 导航栏 (汉堡菜单) 赛博化 --- */
+  .navbar-mobile {
+    background: rgba(15, 23, 42, 0.98); /* 加深背景不透明度 */
+    border-left: 1px solid var(--color-tech); /* 左侧增加一条科技蓝边框 */
+  }
+
+  .navbar-mobile ul {
+    background-color: #1e293b; /* 菜单内部背景 */
+  }
+
+  .navbar-mobile a {
+    font-size: 16px;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* 汉堡按钮本身 */
+  .mobile-nav-toggle {
+    margin-right: 10px; /* 避免贴边太近 */
+    color: var(--color-tech);
+  }
+
+  /* --- 3. 个人介绍 (About) --- */
+  .about .image-card {
+    margin-bottom: 30px; /* 图片和文字拉开距离 */
+    max-width: 80%; /* 图片不要占满全屏，留点呼吸感 */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about .content h3 {
+    font-size: 22px; /* 副标题缩小 */
+    text-align: center;
+  }
+
+  .tagBox {
+    justify-content: center; /* 标签居中显示 */
+  }
+
+  /* --- 4. 时间轴 (Log) 紧凑化 --- */
+  .resume .resume-container {
+    padding-left: 20px; /* 减少左侧缩进，给文字腾地 */
+  }
+
+  .resume .resume-item::before {
+    left: -29px; /* 调整圆点位置 */
+  }
+
+  .resume .resume-item h4 {
+    font-size: 16px;
+  }
+
+  .resume .resume-item h5 {
+    font-size: 12px;
+    padding: 3px 10px; /* 标签改小一点 */
+  }
+
+  /* --- 5. 作品集 (Portfolio) 双列布局 --- */
+  /* 默认Bootstrap在手机是单列，作品多的时候滑不到底 */
+  /* 这里强制改为双列显示，类似应用商店 */
+  .portfolio-container .portfolio-item {
+    width: 50%; /* 强制占一半宽度 */
+    padding: 5px; /* 减小间距 */
+  }
+
+  .portfolio .portfolio-wrap .portfolio-info h4 {
+    font-size: 14px; /* 缩小标题 */
+  }
+
+  .portfolio .portfolio-wrap .portfolio-info p {
+    font-size: 10px;
+    display: none; /* 手机上隐藏副标题，保持界面清爽，或者改为 display:block 但字号极小 */
+  }
+
+  /* 手机端直接显示标题，不需要悬停 */
+  .portfolio .portfolio-wrap::before {
+    opacity: 0.7;
+    background: linear-gradient(to top, #0f172a 0%, transparent 100%);
+  }
+
+  .portfolio .portfolio-wrap .portfolio-info {
+    opacity: 1;
+    top: auto;
+    bottom: 0;
+    padding: 10px 0;
+    background: rgba(15, 23, 42, 0.8);
+    width: 100%;
+  }
+
+  .portfolio .portfolio-wrap .portfolio-links {
+    display: none; /* 手机上点击图片直接进详情，隐藏悬浮按钮，因为手机没有Hover */
+  }
+
+  /* 让整个卡片可点击 (需要配合JS，或者就这样展示) */
+  /* 如果要保持原样悬浮操作，删除上面 .portfolio 相关修改即可 */
+
+  /* --- 6. 全局间距调整 --- */
+  section {
+    padding: 50px 0; /* 减小板块上下间距 */
+  }
+
+  .section-title h2 {
+    font-size: 26px;
+  }
+}
+
+/* 针对超小屏幕手机 (iPhone SE 等) 的额外微调 */
+@media (max-width: 380px) {
+  #hero h1 { font-size: 28px; }
+  .tag { font-size: 11px; padding: 3px 8px; }
+  .portfolio-container .portfolio-item { width: 100%; } /* 超小屏幕还是切回单列 */
+}
+
+/* 补充到 style.css 任意位置 */
+.typing-effect {
+  color: var(--color-tech);
+  font-weight: bold;
+  /* 增加下面这行 */
+  border-bottom: 2px solid transparent; /* 占位，防止抖动 */
+}
+
+/* ========================================================
+   移动端 - 友情链接卡片专属优化 (Services Fix)
+   请确保这段代码在 style.css 的最底部
+   ======================================================== */
+
+@media (max-width: 768px) {
+
+  /* 1. 强制改为双列布局 (一行两个)，更加紧凑整齐 */
+  #services .row > div {
+    width: 50%;       /* 强制每个卡片占一半宽度 */
+    padding: 5px;     /* 减小卡片之间的间距 */
+  }
+
+  /* 2. 卡片容器样式：统一高度、居中对齐 */
+  .services .icon-box {
+    padding: 15px 10px; /* 缩小内边距 */
+    height: 100%;       /* 撑满父容器高度 */
+    min-height: 160px;  /* 【关键】设定最小高度，防止卡片太扁 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 内容从上往下排 */
+    align-items: center;         /* 水平居中 */
+    text-align: center;          /* 文字居中 */
+  }
+
+  /* 3. 图标与标题调整 */
+  .services .icon {
+    margin-bottom: 10px;
+  }
+  .services .icon i {
+    font-size: 32px; /* 手机上图标稍小一点，更精致 */
+  }
+  .services .title {
+    font-size: 15px; /* 标题字号适配 */
+    margin-bottom: 8px;
+    min-height: 40px; /* 预留两行标题的高度，对齐更整齐 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 4. 【核心优化】描述文字限制行数，多余显示省略号 */
+  .services .description {
+    font-size: 11px;      /* 描述文字改小 */
+    line-height: 1.4;
+    color: var(--text-muted);
+
+    /* CSS魔法：限制显示3行，超出部分变省略号 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin-bottom: 0;
+  }
+}
+
+/* ========================================================
+   移动端菜单 100% 全屏穿透修复 (最终版)
+   此代码必须放在 style.css 文件最末尾
+   ======================================================== */
+
+@media (max-width: 991px) {
+
+  /* 1. 【核心修复】当菜单打开时，解除 Header 的锁定 */
+  /* body.mobile-nav-active 类由 main.js 动态添加 */
+  body.mobile-nav-active #header {
+    backdrop-filter: none !important; /* 移除玻璃特效，打破 fixed 元素陷阱 */
+    -webkit-backdrop-filter: none !important;
+    background: transparent !important; /* 让背景透明，由菜单层接管 */
+    border-bottom: none !important;
+    height: auto !important; /* 允许高度撑开 */
+    z-index: 99998 !important; /* 确保 header 在菜单层之下 */
+  }
+
+  /* 2. 菜单容器：绝对霸道的全屏定位 */
+  .navbar-mobile {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important; /* 强制视窗高度 */
+
+    background-color: #0f172a !important;
+    z-index: 99999 !important; /* 确保层级最高 */
+
+    /* 弹性布局居中 */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* 3. 列表容器：强制竖排显示 */
+  .navbar-mobile ul {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  /* 4. 列表项和链接样式 */
+  .navbar-mobile li {
+    display: block !important;
+    margin: 15px 0 !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-mobile a {
+    font-size: 24px !important;
+    color: #fff !important;
+    display: inline-block !important;
+    padding: 10px 0 !important;
+    font-weight: 700;
+  }
+
+  .navbar-mobile a:hover,
+  .navbar-mobile .active {
+    color: var(--color-tech) !important;
+  }
+
+  /* 5. 关闭按钮：固定在右上角 */
+  .navbar-mobile .mobile-nav-toggle {
+    position: absolute !important;
+    top: 25px !important;
+    right: 25px !important;
+    z-index: 100001 !important;
+    color: #fff !important;
+    font-size: 36px !important;
+  }
+
+  /* 6. 锁死页面滚动 */
+  body.mobile-nav-active {
+    overflow: hidden !important;
+  }
+}
