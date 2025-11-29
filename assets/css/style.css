@@ -993,3 +993,72 @@ section {
     overflow: hidden !important;
   }
 }
+
+/* ========================================================
+   移动端作品集布局和可见性修复 (强制 Display 切换)
+   请粘贴到 style.css 文件最末尾
+   ======================================================== */
+@media (max-width: 991px) {
+
+  /* 1. 强制移动端作品集为双列布局，增加阅读效率 */
+  .portfolio .portfolio-container .portfolio-item {
+    width: 50% !important;
+    padding: 5px !important;
+  }
+
+  /* 2. 移除桌面端的 :hover 效果，防止触摸冲突 */
+  .portfolio .portfolio-wrap:hover::before,
+  .portfolio .portfolio-wrap:hover .portfolio-info,
+  .portfolio .portfolio-wrap:hover .portfolio-links {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: none !important;
+  }
+
+  /* 3. 默认状态：在移动端，信息和链接容器使用 display: none 彻底隐藏 */
+  .portfolio .portfolio-wrap .portfolio-info,
+  .portfolio .portfolio-wrap .portfolio-links {
+    display: none !important;
+    pointer-events: none !important; /* 确保不接收点击事件 */
+  }
+
+  /* 4. 【核心修复】点击状态：强制显示链接和信息 */
+  .portfolio .portfolio-wrap.show-links .portfolio-info,
+  .portfolio .portfolio-wrap.show-links .portfolio-links {
+    display: block !important; /* 强制显示 */
+    opacity: 1 !important; /* 辅助显示 */
+    visibility: visible !important; /* 辅助显示 */
+    pointer-events: auto !important; /* 启用点击事件 */
+    z-index: 100 !important; /* 确保在图片上方 */
+
+    /* 调整位置，让信息在图片底部，链接居中 */
+    position: absolute !important;
+  }
+
+  /* 5. 调整链接图标容器的位置 */
+  .portfolio .portfolio-wrap.show-links .portfolio-links {
+    top: 60% !important; /* 链接图标居中靠上一点 */
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    transform: translateY(-50%) !important;
+  }
+
+  /* 6. 链接图标样式优化（加大点击区域和对比度） */
+  .portfolio .portfolio-wrap .portfolio-links a {
+    position: relative !important;
+    z-index: 101 !important;
+    cursor: pointer !important;
+
+    /* 增大点击区域 */
+    width: 50px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    font-size: 28px !important;
+
+    /* 增加对比度，更容易被看到 */
+    background: var(--color-tech) !important;
+    color: #fff !important;
+    border: 2px solid #fff;
+  }
+}

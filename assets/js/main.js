@@ -311,4 +311,23 @@
     typeWriter();
   }
 
+  /**
+   * Mobile Portfolio Click Toggle (Fix for touch)
+   */
+  on('click', '.portfolio-wrap', function(e) {
+    if (window.innerWidth <= 991) {
+      // 如果点击的是链接本身，则不阻止默认行为
+      if (e.target.closest('.portfolio-links a')) {
+        return;
+      }
+
+      // 切换 .show-links 类来控制链接的显示/隐藏
+      this.classList.toggle('show-links');
+
+      // 阻止默认的 GLightbox 行为，直到链接显示
+      if (!this.classList.contains('show-links')) {
+        e.preventDefault();
+      }
+    }
+  }, true);
 })()
