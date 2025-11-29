@@ -271,44 +271,45 @@
   const typingText = select('.typing-effect');
   if(typingText) {
     const words = ["不知名签约作家.", "IT 科技爱好者.", "白日梦想家.", "C/C++ 工程师", "嵌入式工程师", "文学爱好者" , "浪漫主义诗人"];
-    let i = 0;
+    let i = 0; // 词语索引
+    let j = 0; // 字符索引
+    let isDeleting = false; // 是否在删除
     let timer;
 
-    function typeWriter() {
-      const currentWord = words[i % words.length];
-      let j = 0;
-      let isDeleting = false;
+    function type() {
+      const currentWord = words[i % words.length]; // **FIX: 每次调用 type 时获取当前词语**
+      let displayedText = currentWord.substring(0, j);
 
-      function type() {
-        timer = setTimeout(() => {
-          let displayedText = currentWord.substring(0, j);
+      typingText.innerHTML = `<span class="typed-text">${displayedText}</span><span class="cursor"></span>`;
 
-          typingText.innerHTML = `<span class="typed-text">${displayedText}</span><span class="cursor"></span>`;
-
-          if (!isDeleting) {
-            j++;
-            if (j > currentWord.length) {
-              isDeleting = true;
-              clearTimeout(timer);
-              timer = setTimeout(type, 1500); // 停顿1.5秒
-              return;
-            }
-          } else {
-            j--;
-            if (j < 0) {
-              isDeleting = false;
-              i++; // 切换到下一个词
-              clearTimeout(timer);
-              timer = setTimeout(type, 500); // 切换词语前停顿0.5秒
-              return;
-            }
-          }
-          type();
-        }, isDeleting ? 75 : 150);
+      if (!isDeleting) {
+        // 打字模式
+        j++;
+        if (j > currentWord.length) {
+          isDeleting = true;
+          // 完成打字后停顿1.5秒，然后切换到删除模式
+          timer = setTimeout(type, 1500);
+          return; // 结束当前 type 循环，等待 setTimeout 再次调用
+        }
+      } else {
+        // 删除模式
+        j--;
+        if (j < 0) {
+          isDeleting = false;
+          i++; // 切换到下一个词
+          j = 0; // 修复：重置字符索引为0
+          // 完成删除后停顿0.5秒，然后切换到打字模式
+          timer = setTimeout(type, 500);
+          return; // 结束当前 type 循环，等待 setTimeout 再次调用
+        }
       }
-      type();
+
+      // 如果没有进入上面任何一个 return 逻辑，则继续打字或删除
+      timer = setTimeout(type, isDeleting ? 75 : 150); // **FIX: 统一使用 timer 变量来保存 setTimeout ID**
     }
-    typeWriter();
+
+    // 首次启动打字效果
+    type();
   }
 
   /**
